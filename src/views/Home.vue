@@ -1,15 +1,20 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="w-full h-full">
+    <RotationMenu :images="rows" :radius="700" :item-width="240" :item-height="135" />
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<script setup>
+import RotationMenu from '@/components/RotationMenu.vue'
+import { ref } from 'vue'
+const rows = ref([
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+  new URL('@/assets/menu-item.png', import.meta.url).href,
+])
+</script>
