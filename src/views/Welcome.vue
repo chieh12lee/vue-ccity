@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full bg-blue-500">logo</div>
+  <div class="h-full w-full bg-primary"></div>
 </template>
 
 <script setup></script>

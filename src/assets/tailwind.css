@@ -1,2 +1,17 @@
+@layer base,vuetify,utilities,theme,components;
 @import "tailwindcss";
+@theme {
+  --color-primary:oklch(30.90% 0.080 267.20) ;
+  --color-secondary-140: oklch(18.47% 0.009 266.66);
 
+  --color-black: #000;
+  --color-white: #fff;
+
+  --font-sans: "Open Sans",ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-info: "Roboto";
+}
+
+
+  .acenter{
+    @apply absolute left-[50%] translate-x-[-50%];
+  }

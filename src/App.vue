@@ -4,12 +4,15 @@
     class="flex relative w-[1920px] h-[1080px] overflow-hidden bg-black"
   >
     <RouterView />
+    <Saver class="fixed left-0 top-0"></Saver>
   </div>
 </template>
 
 <script setup>
 import { useRouter, RouterView } from 'vue-router'
 import { useInactivityRedirect } from '@/hooks/useInactivityRedirect'
+import Saver from '@/views/_Saver.vue'
+
 const router = useRouter()
 const onTimeout = () => {
   router.push({ name: 'welcome' })
