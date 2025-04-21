@@ -2,20 +2,21 @@ import { useTimeoutFn } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { onMounted, onUnmounted, ref } from 'vue'
 
-export function useInactivityRedirect(timeoutMs = 3 * 60 * 1000, onTimeout) {
-  const router = useRouter()
+export default (count = 3 * 60 * 1000, onTimeout = () => {}) => {
   const isActive = ref(false) // 用於標記計時器是否啟動
 
   // 預設的超時回調（如果未提供則導向 `/home`）
   const timeoutCallback = () => {
-    onTimeout ? onTimeout() : router.push('/home')
+    stopTimer()
+    onTimeout()
   }
 
   // 計時器控制
-  const { start, stop } = useTimeoutFn(timeoutCallback, timeoutMs, { immediate: false })
+  const { start, stop } = useTimeoutFn(timeoutCallback, count, { immediate: false })
 
   // 重置計時器
   const resetTimer = () => {
+    isActive.value = true
     stop()
     start()
   }
@@ -37,7 +38,9 @@ export function useInactivityRedirect(timeoutMs = 3 * 60 * 1000, onTimeout) {
   // 監聽觸控事件
   onMounted(() => {
     window.addEventListener('touchstart', resetTimer)
-    startTimer() // 頁面加載時自動啟動
+    window.addEventListener('click', resetTimer)
+    // startTimer() // 頁面加載時自動啟動
+    timeoutCallback()
   })
 
   // 移除事件監聽
@@ -46,5 +49,5 @@ export function useInactivityRedirect(timeoutMs = 3 * 60 * 1000, onTimeout) {
     stopTimer()
   })
 
-  return { startTimer, stopTimer, resetTimer }
+  return { startTimer, stopTimer, resetTimer, isActive }
 }

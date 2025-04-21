@@ -3,22 +3,25 @@
     @touchstart="clickEffect"
     class="flex relative w-[1920px] h-[1080px] overflow-hidden bg-black"
   >
-    <RouterView />
-    <Saver class="fixed left-0 top-0"></Saver>
+    <Transition name="fade" mode="out-in">
+      <RouterView v-if="isActive" />
+      <Saver v-else class="fixed left-0 top-0"></Saver>
+    </Transition>
   </div>
 </template>
 
 <script setup>
+import { provide } from 'vue'
 import { useRouter, RouterView } from 'vue-router'
-import { useInactivityRedirect } from '@/hooks/useInactivityRedirect'
+import useLock from '@/hooks/useLock'
 import Saver from '@/views/_Saver.vue'
 
 const router = useRouter()
 const onTimeout = () => {
   router.push({ name: 'welcome' })
 }
-const { startTimer, stopTimer, resetTimer } = useInactivityRedirect(180000, onTimeout)
-startTimer()
+const { isActive } = useLock(1000 * 10, onTimeout, onTimeout)
+provide('isActive', isActive)
 
 function clickEffect(e) {
   // 判斷事件類型是滑鼠點擊還是觸控
@@ -44,7 +47,15 @@ function clickEffect(e) {
   }
 }
 </script>
-<style lang="scss">
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .clickEffect {
   position: fixed;
   background: #fff;
@@ -53,22 +64,22 @@ function clickEffect(e) {
   z-index: 99999;
   width: 80px;
   height: 80px;
-  pointer-events: none; // 防止阻擋用戶操作
-  animation: clickEffect 3s ease-out; // 縮短動畫時間
-  transform: translateX(-50%) translateY(-50%) scale(0); // 初始狀態為最小
-  opacity: 1; // 初始狀態為不透明
+  pointer-events: none;
+  animation: clickEffect 3s ease-out;
+  transform: translateX(-50%) translateY(-50%) scale(0);
+  opacity: 1;
 }
 
 @keyframes clickEffect {
   0% {
     opacity: 0.5;
 
-    transform: translateX(-50%) translateY(-50%) scale(0); // 初始狀態為最小
+    transform: translateX(-50%) translateY(-50%) scale(0);
   }
   100% {
     opacity: 0;
 
-    transform: translateX(-50%) translateY(-50%) scale(2); // 初始狀態為最小
+    transform: translateX(-50%) translateY(-50%) scale(2);
   }
 }
 </style>

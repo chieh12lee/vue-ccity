@@ -1,14 +1,9 @@
 <template>
   <div class="swiper swiper-container" ref="swiperRef">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" @click="update(0)"><img src="@/assets/menu-item.png" /></div>
-      <div class="swiper-slide" @click="update(1)"><img src="@/assets/menu-item.png" /></div>
-      <div class="swiper-slide" @click="update(0)"><img src="@/assets/menu-item.png" /></div>
-      <div class="swiper-slide" @click="update(1)"><img src="@/assets/menu-item.png" /></div>
-      <div class="swiper-slide" @click="update(0)"><img src="@/assets/menu-item.png" /></div>
-      <div class="swiper-slide" @click="update(1)"><img src="@/assets/menu-item.png" /></div>
-      <div class="swiper-slide" @click="update(0)"><img src="@/assets/menu-item.png" /></div>
-      <div class="swiper-slide" @click="update(1)"><img src="@/assets/menu-item.png" /></div>
+      <div class="swiper-slide" v-for="row in MenuData" @click="update(0)">
+        <img src="@/assets/imgs/menu-item.png" />
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +13,7 @@ import { ref, onMounted } from 'vue'
 import { Swiper } from 'swiper'
 import 'swiper/css'
 import { EffectCoverflow } from 'swiper/modules'
+import MenuData from '@/components/MenuData.js'
 
 const emit = defineEmits(['update'])
 const update = (idx) => {

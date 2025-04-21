@@ -28,8 +28,10 @@
 import Menu from './menu/Index.vue'
 import useMenu from './menu/useMenu'
 import useIntro from './useIntro'
-import { provide } from 'vue'
+import { provide, inject } from 'vue'
 import GestureAction from './_Action.vue'
+
+const isActive = inject('isActive')
 const menu = useMenu()
 provide('menu', menu)
 

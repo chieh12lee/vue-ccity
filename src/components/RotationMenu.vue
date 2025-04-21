@@ -3,11 +3,12 @@
     <div ref="dragContainer" id="drag-container">
       <!-- 旋轉容器 -->
       <div ref="spinContainer" id="spin-container">
-        <!-- 使用 v-for 載入圖片 -->
         <img
-          v-for="(img, index) in images"
-          :key="index"
-          :src="img"
+          v-for="(row, index) in rows"
+          @click="$router.push(row.route)"
+          class="cursor-pointer"
+          :key="row.id"
+          :src="row.thumbnail"
           alt="carousel image"
           :style="getImgStyle(index)"
         />
@@ -43,7 +44,7 @@ const props = defineProps({
     type: Number,
     default: 237,
   },
-  images: {
+  rows: {
     type: Array,
     default: () => [],
   },
@@ -61,7 +62,7 @@ const spinContainer = ref(null)
 const ground = ref(null)
 
 function getImgStyle(index) {
-  const total = props.images.length
+  const total = props.rows.length
   return {
     transform: `rotateY(${index * (360 / total)}deg) translateZ(${props.radius}px)`,
     transition: 'transform 1s',
@@ -70,6 +71,7 @@ function getImgStyle(index) {
 
 // 根據 tX 與 tY 更新旋轉容器
 function applyTransform(obj) {
+  if (!obj) return
   if (tY.value > 180) tY.value = 180
   if (tY.value < 0) tY.value = 0
   obj.style.transform = `rotateX(${-tY.value}deg) rotateY(${tX.value}deg)`
@@ -77,17 +79,21 @@ function applyTransform(obj) {
 
 // 控制動畫暫停或恢復
 function playSpin(yes) {
+  if (!spinContainer.value) return
   spinContainer.value.style.animationPlayState = yes ? 'running' : 'paused'
 }
 
-// 處理觸控開始事件（改作用於 spinContainer）
 function handleTouchStart(e) {
   e.preventDefault()
   clearInterval(timer)
+
   const touch = e.touches[0]
-  let sX = touch.clientX // 僅考慮水平移動
+  let sX = touch.clientX
+  let sY = touch.clientY
+  const startTime = Date.now()
 
   const onTouchMove = (e) => {
+    if (!spinContainer.value) return
     const touch = e.touches[0]
     const nX = touch.clientX
     desX.value = nX - sX
@@ -96,7 +102,23 @@ function handleTouchStart(e) {
     sX = nX
   }
 
-  const onTouchEnd = () => {
+  const onTouchEnd = (e) => {
+    const endTime = Date.now()
+    const duration = endTime - startTime
+    const touch = e.changedTouches[0]
+    const moveX = touch.clientX - sX
+    const moveY = touch.clientY - sY
+    const moved = Math.sqrt(moveX * moveX + moveY * moveY)
+
+    // 🔹 處理輕觸點擊（模擬點擊圖片）
+    if (duration < 200 && moved < 10) {
+      const tappedEl = document.elementFromPoint(touch.clientX, touch.clientY)
+      if (tappedEl && tappedEl.tagName === 'IMG') {
+        tappedEl.click()
+      }
+    }
+
+    // 🔹 慣性旋轉
     timer = setInterval(() => {
       desX.value *= 0.95
       tX.value += desX.value * 0.1
@@ -107,6 +129,7 @@ function handleTouchStart(e) {
         playSpin(true)
       }
     }, 17)
+
     window.removeEventListener('touchmove', onTouchMove)
     window.removeEventListener('touchend', onTouchEnd)
   }
