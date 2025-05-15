@@ -5,7 +5,7 @@
       <div ref="spinContainer" id="spin-container">
         <img
           v-for="(row, index) in rows"
-          @click="$router.push(row.route)"
+          @click="$emit('clic', row.id)"
           class="cursor-pointer"
           :key="row.id"
           :src="row.thumbnail"

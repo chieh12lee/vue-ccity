@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full bg-primary overflow-hidden">
+  <div class="h-full w-full bg-primary overflow-hidden pointer-event-auto">
     <div class="absolute inset-0 opacity-0" ref="bgPattern">
       <img src="@/assets/imgs/bg-pattern.png" alt="" />
     </div>

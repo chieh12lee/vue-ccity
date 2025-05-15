@@ -16,9 +16,11 @@ export default (count = 3 * 60 * 1000, onTimeout = () => {}) => {
 
   // 重置計時器
   const resetTimer = () => {
-    isActive.value = true
-    stop()
-    start()
+    setTimeout(() => {
+      isActive.value = true
+      stop()
+      start()
+    }, 1000)
   }
 
   // 手動啟動計時器

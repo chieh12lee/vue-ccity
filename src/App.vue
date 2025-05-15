@@ -3,10 +3,12 @@
     @touchstart="clickEffect"
     class="flex relative w-[1920px] h-[1080px] overflow-hidden bg-black"
   >
-    <Transition name="fade" mode="out-in">
-      <RouterView v-if="isActive" />
-      <Saver v-else class="fixed left-0 top-0"></Saver>
-    </Transition>
+    <router-view v-slot="{ Component }" v-if="isActive" :key="$route.query">
+      <transition>
+        <component :is="Component" />
+      </transition>
+    </router-view>
+    <Saver v-else class="fixed left-0 top-0"></Saver>
   </div>
 </template>
 
@@ -16,11 +18,15 @@ import { useRouter, RouterView } from 'vue-router'
 import useLock from '@/hooks/useLock'
 import Saver from '@/views/_Saver.vue'
 
+import chapters from './chapters.js'
+provide('chapters', chapters)
+
 const router = useRouter()
 const onTimeout = () => {
   router.push({ name: 'welcome' })
 }
-const { isActive } = useLock(1000 * 10, onTimeout, onTimeout)
+
+const { isActive } = useLock(1000 * 3000, onTimeout, onTimeout)
 provide('isActive', isActive)
 
 function clickEffect(e) {

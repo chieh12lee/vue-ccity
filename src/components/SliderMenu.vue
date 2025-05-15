@@ -1,65 +1,39 @@
 <template>
-  <div class="swiper swiper-container" ref="swiperRef">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="row in MenuData" @click="update(0)">
-        <img src="@/assets/imgs/menu-item.png" />
+  <carousel-3d :perspective="0" :space="350" :display="9" :onMainSlideClick="update">
+    <slide v-for="(slide, i) in chapters" :index="i">
+      <div>
+        <img :src="slide.thumbnail" alt="" />
       </div>
-    </div>
-  </div>
+    </slide>
+  </carousel-3d>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { Swiper } from 'swiper'
-import 'swiper/css'
-import { EffectCoverflow } from 'swiper/modules'
-import MenuData from '@/components/MenuData.js'
+import { inject, ref, onMounted } from 'vue'
+import { Carousel3d, Slide } from '@nanoandrew4/vue3-carousel-3d'
 
+const chapters = inject('chapters')
 const emit = defineEmits(['update'])
-const update = (idx) => {
-  emit('update', idx)
+const update = (slide) => {
+  emit('update', chapters[slide.index]?.id)
 }
 
-const swiperRef = ref(null)
-let swiper
-
-// ,
-onMounted(() => {
-  swiper = new Swiper(swiperRef.value, {
-    speed: 1000,
-    loop: true,
-    effect: 'coverflow',
-    grabCursor: true,
-    slidesPerView: 'auto',
-    // loopAdditionalSlides: 8,
-    centeredSlides: true,
-    coverflowEffect: {
-      rotate: 0,
-      stretch: 140,
-      depth: 200,
-      modifier: 0.5,
-      slideShadows: false,
-    },
-
-    modules: [EffectCoverflow],
-  })
-})
+onMounted(() => {})
 </script>
-<style lang="scss">
-.swiper-container {
-  @apply w-full;
-  background: #000;
+<style>
+.carousel-3d-container {
+  margin-bottom: -240px !important;
+  padding-bottom: 600px;
 
-  padding-top: 50px;
-  padding-bottom: 50px;
-  perspective-origin: 50% 113%;
-}
-.swiper-slide {
-  width: 400px;
-  height: 200px;
-  overflow: hidden;
-  img {
-    @apply w-full h-full object-cover;
+  perspective-origin: 50% 180%;
+  perspective: 2000px;
+  .carousel-3d-slide {
+    &.current {
+      transform: translateY(120px) !important;
+    }
+    background: transparent;
+    /* perspective-origin: 50% 100%; */
+    /* perspective: 1800px !important; */
   }
 }
 </style>
