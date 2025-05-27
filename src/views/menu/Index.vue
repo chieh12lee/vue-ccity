@@ -5,7 +5,7 @@
   >
     <img class="absolute bottom-0 left-0 w-full" src="@/assets/imgs/menu-bg.svg" alt="" />
     <div
-      class="cursor-pointer absolute w-full left-0 top-[70px] flex flex-col items-center z-10"
+      class="cursor-pointer absolute left-[50%] ml-[-19px] top-[70px] flex flex-col items-center z-10"
       @click="toggle"
       :class="!active ? '-mt-[140px]' : 'mt-[0px]'"
     >

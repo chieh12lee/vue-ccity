@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full">
     <RotationMenu
-      @clic="(id) => $router.push({ name: 'main', query: { id: id } })"
+      @clic="(id) => $router.push({ name: 'main', params: { id: id } })"
       :rows="chapters"
       :radius="730"
       :item-width="240"

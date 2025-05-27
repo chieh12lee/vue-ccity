@@ -41,7 +41,6 @@ export default (count = 3 * 60 * 1000, onTimeout = () => {}) => {
   onMounted(() => {
     window.addEventListener('touchstart', resetTimer)
     window.addEventListener('click', resetTimer)
-    // startTimer() // 頁面加載時自動啟動
     timeoutCallback()
   })
 

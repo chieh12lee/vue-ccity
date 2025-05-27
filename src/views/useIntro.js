@@ -82,7 +82,7 @@ export default (pauses) => {
   const pause = () => {
     videoPlayer.value.pause()
   }
-  onMounted(() => {})
+
   return {
     videoPlayer,
     onTimeUpdate,

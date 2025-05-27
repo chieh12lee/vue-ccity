@@ -3,34 +3,40 @@
     @touchstart="clickEffect"
     class="flex relative w-[1920px] h-[1080px] overflow-hidden bg-black"
   >
-    <router-view v-slot="{ Component }" v-if="isActive" :key="$route.query">
-      <transition>
-        <component :is="Component" />
-      </transition>
-    </router-view>
-    <Saver v-else class="fixed left-0 top-0"></Saver>
+    <transition name="fade" mode="out-in">
+      <router-view v-slot="{ Component }" v-if="isActive">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" :key="$route.params.id" />
+        </transition>
+      </router-view>
+      <Saver v-else class="fixed left-0 top-0" />
+    </transition>
   </div>
 </template>
 
 <script setup>
-import { provide } from 'vue'
+import { provide, reactive } from 'vue'
 import { useRouter, RouterView } from 'vue-router'
 import useLock from '@/hooks/useLock'
 import Saver from '@/views/_Saver.vue'
-
 import chapters from './chapters.js'
+
 provide('chapters', chapters)
 
 const router = useRouter()
+
 const onTimeout = () => {
   router.push({ name: 'welcome' })
 }
+const state = reactive({ isFreezing: false, isEffecting: true })
+provide('state', state)
 
-const { isActive } = useLock(1000 * 3000, onTimeout, onTimeout)
+const { isActive } = useLock(1000 * 60 * 1, onTimeout, onTimeout)
 provide('isActive', isActive)
 
 function clickEffect(e) {
-  // 判斷事件類型是滑鼠點擊還是觸控
+  if (!state.isEffecting) return
+
   const isTouchEvent = e.type.startsWith('touch')
   // 獲取點擊或觸控的位置
   const clientX = isTouchEvent ? e.touches[0].clientX : e.clientX
