@@ -1,9 +1,11 @@
 <template>
   <div class="w-full h-full">
     <div
-      class="absolute right-[140px] top-[80px] w-[200px] h-[150px] z-50"
+      class="absolute right-[168px] top-[95px] w-[148px] h-[150px] z-50"
       @click="$router.push({ name: 'welcome' })"
-    ></div>
+    >
+      <!-- <img src="@/assets/imgs/logo-s.svg" alt="" /> -->
+    </div>
     <div class="">
       <video
         ref="videoPlayer"

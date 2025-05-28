@@ -190,7 +190,7 @@ onMounted(() => {
   display: flex;
 
   @apply h-full w-full;
-  background: #111;
+  /* background: #111; */
   perspective: 2000px;
   transform-style: preserve-3d;
 }

@@ -31,7 +31,7 @@ const onTimeout = () => {
 const state = reactive({ isFreezing: false, isEffecting: true })
 provide('state', state)
 
-const { isActive } = useLock(1000 * 60 * 1, onTimeout, onTimeout)
+const { isActive } = useLock(1000 * 60 * 30, onTimeout, onTimeout)
 provide('isActive', isActive)
 
 function clickEffect(e) {

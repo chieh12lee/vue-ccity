@@ -9,10 +9,17 @@
     </div>
     <div class="relative flex flex-col items-center [&>img]:block">
       <div class="flex flex-col items-center w-[469px] relative mt-[50px]">
-        <img class="opacity-0" ref="building" src="@/assets/imgs/building.png" alt="" />
-
+        <!-- <img class="opacity-0" ref="building" src="@/assets/imgs/building.png" alt="" /> -->
+        <video
+          ref="building"
+          src="@/assets/building.webm"
+          muted
+          loop
+          playsinline
+          class="h-[497px] w-auto opacity-0"
+        ></video>
         <div
-          class="absolute bottom-[66px] h-[2px] bg-[#ff9900] origin-center scale-x-0 w-full"
+          class="absolute bottom-[48px] h-[2px] bg-[#ffffff] origin-center scale-x-0 w-full"
           ref="orangeLine"
         ></div>
 
@@ -55,7 +62,10 @@ const intro1 = ref(null)
 const intro2 = ref(null)
 
 onMounted(() => {
-  const tl = gsap.timeline()
+  const tl = gsap.timeline({
+    repeat: -1, // loop indefinitely
+    repeatDelay: 10, // wait 10s before each restart
+  })
 
   tl.to(bgPattern.value, { opacity: 1, duration: 1 })
     // 其他依序淡入
@@ -73,7 +83,18 @@ onMounted(() => {
     .to(bgL.value, { x: '-50%', duration: 2 }, '<')
 
     // 建築物 + 橘線 scale 展開
-    .to(building.value, { opacity: 1, duration: 3 }, '-=.8')
+    .to(
+      building.value,
+      {
+        opacity: 1,
+        duration: 3,
+        onStart: () => {
+          building.value.currentTime = 0
+          building.value.play()
+        },
+      },
+      '-=.8',
+    )
     .to(
       orangeLine.value,
       {
