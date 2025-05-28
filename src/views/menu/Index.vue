@@ -39,7 +39,7 @@ const toggle = () => {
 const onUpdate = (id) => {
   console.log(id)
   toggle()
-  router.push({ name: 'main', query: { id } })
+  router.push({ name: 'main', params: { id } })
 
   // info.jump(idx)
 }
