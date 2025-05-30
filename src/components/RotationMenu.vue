@@ -38,11 +38,11 @@ const props = defineProps({
   },
   imgWidth: {
     type: Number,
-    default: 420,
+    default: 300,
   },
   imgHeight: {
     type: Number,
-    default: 237,
+    default: 300 * 0.7,
   },
   rows: {
     type: Array,
@@ -52,7 +52,7 @@ const props = defineProps({
 
 // 內部狀態，部分狀態不需要 props 化
 const tX = ref(0)
-const tY = ref(4)
+const tY = ref(0)
 const desX = ref(0)
 let timer = null
 
@@ -162,6 +162,7 @@ function handleMouseWheel(e) {
 
 onMounted(() => {
   // 設定圖片與地面的尺寸
+
   const ospin = spinContainer.value
   ospin.style.width = props.imgWidth + 'px'
   ospin.style.height = props.imgHeight + 'px'
@@ -190,9 +191,10 @@ onMounted(() => {
   display: flex;
 
   @apply h-full w-full;
-  /* background: #111; */
-  perspective: 2000px;
+  perspective: 1400px;
+  perspective-origin: 50% 15%;
   transform-style: preserve-3d;
+  padding-bottom: 150px;
 }
 #drag-container,
 #spin-container {
@@ -200,7 +202,7 @@ onMounted(() => {
   display: flex;
   margin: auto;
   transform-style: preserve-3d;
-  transform: rotateX(-4deg);
+  transform: rotateX(0deg);
   overflow: unset;
 }
 

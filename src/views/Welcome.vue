@@ -12,9 +12,9 @@
     <RotationMenu
       @clic="(id) => $router.push({ name: 'main', params: { id: id } })"
       :rows="chapters"
-      :radius="730"
-      :item-width="240"
-      :item-height="135"
+      :radius="650"
+      :img-width="300"
+      :img-height="180"
     />
   </div>
 </template>

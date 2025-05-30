@@ -11,6 +11,9 @@
       </router-view>
       <Saver v-else class="fixed left-0 top-0" />
     </transition>
+    <!-- <div class="fixed inset-0 w-full h-full opacity-10 pointer-events-none"> -->
+    <!--   <img src="./temp/唐鼎-春城麗都工學館-版型20250402-ol_2.svg" alt="" /> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -31,7 +34,7 @@ const onTimeout = () => {
 const state = reactive({ isFreezing: false, isEffecting: true })
 provide('state', state)
 
-const { isActive } = useLock(1000 * 60 * 30, onTimeout, onTimeout)
+const { isActive } = useLock(1000 * 60 * 3, onTimeout, onTimeout)
 provide('isActive', isActive)
 
 function clickEffect(e) {

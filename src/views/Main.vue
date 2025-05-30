@@ -10,7 +10,6 @@
       <video
         ref="videoPlayer"
         autoplay
-        loop
         muted
         disablePictureInPicture
         @timeupdate="onTimeUpdate"

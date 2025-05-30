@@ -8,7 +8,7 @@
       <img ref="bgR" class="" src="@/assets/imgs/bg-pattern-r.png" alt="" />
     </div>
     <div class="relative flex flex-col items-center [&>img]:block">
-      <div class="flex flex-col items-center w-[469px] relative mt-[50px]">
+      <div class="flex flex-col items-center w-[469px] relative mt-[24px]">
         <!-- <img class="opacity-0" ref="building" src="@/assets/imgs/building.png" alt="" /> -->
         <video
           ref="building"
@@ -23,7 +23,7 @@
           ref="orangeLine"
         ></div>
 
-        <div class="flex justify-between w-[604px] absolute bottom-[200px]">
+        <div class="flex justify-between w-[590px] absolute bottom-[94px]">
           <img class="opacity-0" ref="textCharming" src="@/assets/imgs/text-charming.svg" alt="" />
           <img
             class="opacity-0"
@@ -34,11 +34,16 @@
         </div>
       </div>
 
-      <img class="mt-2 opacity-0" ref="mainTitle" src="@/assets/imgs/maintitle.svg" alt="" />
-      <img class="mt-6 opacity-0" ref="subTitle" src="@/assets/imgs/subtitle.svg" alt="" />
-      <img class="mt-6 opacity-0" ref="mainLabel" src="@/assets/imgs/main-label.svg" alt="" />
-      <img class="mt-20 opacity-0" ref="intro1" src="@/assets/imgs/intro-1.svg" alt="" />
-      <img class="mt-4 opacity-0" ref="intro2" src="@/assets/imgs/intro-2.svg" alt="" />
+      <img class="mt-[27px] opacity-0" ref="mainTitle" src="@/assets/imgs/maintitle.svg" alt="" />
+      <img class="mt-[32px] opacity-0" ref="subTitle" src="@/assets/imgs/subtitle.svg" alt="" />
+      <img
+        class="mt-6 opacity-0 w-[640px]"
+        ref="mainLabel"
+        src="@/assets/imgs/main-label.svg"
+        alt=""
+      />
+      <img class="mt-[90px] opacity-0" ref="intro1" src="@/assets/imgs/intro-1.svg" alt="" />
+      <img class="mt-[32px] opacity-0" ref="intro2" src="@/assets/imgs/intro-2.svg" alt="" />
     </div>
   </div>
 </template>
@@ -89,8 +94,10 @@ onMounted(() => {
         opacity: 1,
         duration: 3,
         onStart: () => {
-          building.value.currentTime = 0
-          building.value.play()
+          if (building.value) {
+            building.value.currentTime = 0
+            building.value.play()
+          }
         },
       },
       '-=.8',
