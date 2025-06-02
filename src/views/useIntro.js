@@ -45,7 +45,6 @@ export default (pauses) => {
   const showActionComponent = ref(false)
 
   const currentTime = ref(0)
-  // 計算當前所在的章節
 
   // 每次影片時間更新時進行檢查
   function onTimeUpdate() {
@@ -79,6 +78,10 @@ export default (pauses) => {
     videoPlayer.value.play()
   }
 
+  const replay = () => {
+    videoPlayer.value.currentTime = 0
+    videoPlayer.value.play()
+  }
   const pause = () => {
     videoPlayer.value.pause()
   }
@@ -93,5 +96,6 @@ export default (pauses) => {
     showActionComponent,
     play,
     pause,
+    replay,
   }
 }

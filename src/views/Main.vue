@@ -1,8 +1,15 @@
 <template>
   <div class="w-full h-full">
     <div
-      class="absolute right-[168px] top-[95px] w-[148px] h-[150px] z-50"
+      class="absolute right-[160px] top-[95px] w-[160px] h-[120px] z-50 bg-red-500 opacity-0"
       @click="$router.push({ name: 'welcome' })"
+    >
+      <!-- <img src="@/assets/imgs/logo-s.svg" alt="" /> -->
+    </div>
+
+    <div
+      class="absolute right-[160px] top-[240px] w-[160px] h-[120px] z-50 bg-gray-500 opacity-0"
+      @click="replay"
     >
       <!-- <img src="@/assets/imgs/logo-s.svg" alt="" /> -->
     </div>
@@ -65,6 +72,7 @@ const {
   onActionCompleted,
   play,
   pause,
+  replay,
 } = intro
 
 provide('intro', intro)
