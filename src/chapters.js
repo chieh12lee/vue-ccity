@@ -64,8 +64,8 @@ export default [
   },
   {
     id: 10,
-    title: '全棟含各戶淨水系統',
+    title: '雨水回收系統',
     thumbnail: new URL('@/assets/item/10.png', import.meta.url).href,
-    video: new URL('@/assets/video/10-全棟含各戶淨水系統.mp4', import.meta.url).href,
+    video: new URL('@/assets/video/10-雨水回收系統.mp4', import.meta.url).href,
   },
 ]
