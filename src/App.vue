@@ -11,8 +11,8 @@
       </router-view>
       <Saver v-else class="fixed left-0 top-0" />
     </transition>
-    <!-- <div class="fixed inset-0 w-full h-full opacity-10 pointer-events-none"> -->
-    <!--   <img src="./temp/唐鼎-春城麗都工學館-版型20250402-ol_2.svg" alt="" /> -->
+    <!-- <div class="fixed top-0 left-0 w-full h-screen opacity-0 pointer-events-none z-50"> -->
+    <!--   <img class="h-full w-full" src="./temp/唐鼎-春城麗都工學館-版型20250402-ol_3.svg" alt="" /> -->
     <!-- </div> -->
   </div>
 </template>

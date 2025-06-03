@@ -1,18 +1,17 @@
 <template>
   <div class="w-full h-full">
-    <div
-      class="absolute right-[160px] top-[95px] w-[160px] h-[120px] z-50 bg-red-500 opacity-0"
-      @click="$router.push({ name: 'welcome' })"
-    >
-      <!-- <img src="@/assets/imgs/logo-s.svg" alt="" /> -->
+    <div class="absolute right-[100px] top-[95px] w-[300px] z-50 flex flex-col items-center">
+      <div class="cursor-pointer" @click="$router.push({ name: 'welcome' })">
+        <img class="w-[154px]" src="@/assets/imgs/logo-s.svg" alt="" />
+      </div>
+      <div
+        class="mt-[43px] py-[5px] px-3 border-y-2 border-[#c79f62] text-white text-[1.24rem] font-bold text-center"
+        @click="replay"
+      >
+        {{ chapter.title }}
+      </div>
     </div>
 
-    <div
-      class="absolute right-[160px] top-[240px] w-[160px] h-[120px] z-50 bg-gray-500 opacity-0"
-      @click="replay"
-    >
-      <!-- <img src="@/assets/imgs/logo-s.svg" alt="" /> -->
-    </div>
     <div class="">
       <video
         ref="videoPlayer"
