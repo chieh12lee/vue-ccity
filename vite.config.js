@@ -6,9 +6,15 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 export default defineConfig(({ command, mode }) => {
-  const isDev = mode === 'development'
+  // const isDev = mode === 'development'
+
   return {
-    base: isDev ? './' : '/vue-ccity/',
+    base:
+      mode === 'staging'
+        ? '/vue-ccity/' // 例如 /staging/
+        : mode === 'production'
+          ? './' // 例如 /prod/
+          : './', // development 時通常用根目錄
     plugins: [
       vue(),
       /* vueDevTools(), */

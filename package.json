@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "staging": "vite build --mode staging",
+    "prod": "vite prod --mode production",
     "preview": "vite preview",
     "lint": "eslint . --fix",
     "format": "prettier --write src/"
