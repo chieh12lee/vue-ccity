@@ -1,6 +1,9 @@
 <template>
   <div class="w-full h-full">
-    <div class="absolute right-[100px] top-[95px] w-[300px] z-50 flex flex-col items-center">
+    <div
+      class="absolute right-[100px] top-[95px] w-[300px] z-50 flex flex-col items-center"
+      :class="sketchitActive ? 'pointer-events-none' : ''"
+    >
       <div class="cursor-pointer" @click="$router.push({ name: 'welcome' })">
         <img class="w-[154px]" src="@/assets/imgs/logo-s.svg" alt="" />
       </div>
@@ -61,6 +64,7 @@ const { active: menuActive } = menu
 
 const sketchit = useSketchit({ domId: '#ex3' })
 provide('sketchit', sketchit)
+const { active: sketchitActive } = sketchit
 
 const intro = useIntro(chapter.pauses)
 const {

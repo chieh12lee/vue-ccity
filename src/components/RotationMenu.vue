@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue'
 
 // 定義 props 與預設值
 const props = defineProps({
@@ -83,61 +83,58 @@ function playSpin(yes) {
   spinContainer.value.style.animationPlayState = yes ? 'running' : 'paused'
 }
 
+let startTime
+let sX, sY
 function handleTouchStart(e) {
+  console.log('touch start')
   e.preventDefault()
   clearInterval(timer)
 
   const touch = e.touches[0]
-  let sX = touch.clientX
-  let sY = touch.clientY
-  const startTime = Date.now()
-
-  const onTouchMove = (e) => {
-    if (!spinContainer.value) return
-    const touch = e.touches[0]
-    const nX = touch.clientX
-    desX.value = nX - sX
-    tX.value += desX.value * 0.1
-    applyTransform(spinContainer.value)
-    sX = nX
-  }
-
-  const onTouchEnd = (e) => {
-    const endTime = Date.now()
-    const duration = endTime - startTime
-    const touch = e.changedTouches[0]
-    const moveX = touch.clientX - sX
-    const moveY = touch.clientY - sY
-    const moved = Math.sqrt(moveX * moveX + moveY * moveY)
-
-    // 🔹 處理輕觸點擊（模擬點擊圖片）
-    if (duration < 200 && moved < 10) {
-      const tappedEl = document.elementFromPoint(touch.clientX, touch.clientY)
-      if (tappedEl && tappedEl.tagName === 'IMG') {
-        tappedEl.click()
-      }
-    }
-
-    // 🔹 慣性旋轉
-    timer = setInterval(() => {
-      desX.value *= 0.95
-      tX.value += desX.value * 0.1
-      applyTransform(spinContainer.value)
-      playSpin(false)
-      if (Math.abs(desX.value) < 0.5) {
-        clearInterval(timer)
-        playSpin(true)
-      }
-    }, 17)
-
-    window.removeEventListener('touchmove', onTouchMove)
-    window.removeEventListener('touchend', onTouchEnd)
-  }
-
-  window.addEventListener('touchmove', onTouchMove, false)
-  window.addEventListener('touchend', onTouchEnd, false)
+  sX = touch.clientX
+  sY = touch.clientY
+  startTime = Date.now()
 }
 
+const onTouchMove = (e) => {
+  if (!spinContainer.value) return
+  const touch = e.touches[0]
+  const nX = touch.clientX
+  desX.value = nX - sX
+  tX.value += desX.value * 0.1
+  applyTransform(spinContainer.value)
+  sX = nX
+}
+
+const onTouchEnd = (e) => {
+  console.log('touch end')
+  const endTime = Date.now()
+  const duration = endTime - startTime
+  const touch = e.changedTouches[0]
+  const moveX = touch.clientX - sX
+  const moveY = touch.clientY - sY
+  const moved = Math.sqrt(moveX * moveX + moveY * moveY)
+
+  // 🔹 處理輕觸點擊（模擬點擊圖片）
+  if (duration < 200 && moved < 10) {
+    const tappedEl = document.elementFromPoint(touch.clientX, touch.clientY)
+    if (tappedEl && tappedEl.tagName === 'IMG') {
+      tappedEl.click()
+    }
+  }
+
+  // 🔹 慣性旋轉
+  timer = setInterval(() => {
+    desX.value *= 0.95
+    tX.value += desX.value * 0.1
+    applyTransform(spinContainer.value)
+    playSpin(false)
+    if (Math.abs(desX.value) < 0.5) {
+      clearInterval(timer)
+      playSpin(true)
+    }
+  }, 17)
+}
 // 處理鼠標滾輪事件，調整半徑後重新初始化圖片排列
 function handleMouseWheel(e) {
   e.preventDefault()
@@ -182,6 +179,15 @@ onMounted(() => {
   dragContainer.value.addEventListener('touchstart', handleTouchStart, false)
   dragContainer.value.addEventListener('mousewheel', handleMouseWheel, false)
   dragContainer.value.addEventListener('DOMMouseScroll', handleMouseWheel, false)
+  window.addEventListener('touchmove', onTouchMove, true)
+  window.addEventListener('touchend', onTouchEnd, true)
+})
+onBeforeUnmount(() => {
+  dragContainer.value.removeEventListener('touchstart', handleTouchStart)
+  dragContainer.value.removeEventListener('mousewheel', handleMouseWheel)
+  dragContainer.value.removeEventListener('DOMMouseScroll', handleMouseWheel)
+  window.removeEventListener('touchmove', onTouchMove)
+  window.removeEventListener('touchend', onTouchEnd, true)
 })
 </script>
 

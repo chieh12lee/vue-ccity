@@ -14,7 +14,11 @@ export default ({ domId }) => {
 
   const toggle = () => {
     active.value = !active.value
-    trigger()
+    if (active.value) {
+      trigger()
+    } else {
+      window.$(domId).off()
+    }
   }
   return { toggle, active, trigger }
 }
