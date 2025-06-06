@@ -19,7 +19,6 @@
       <video
         ref="videoPlayer"
         autoplay
-        muted
         disablePictureInPicture
         @timeupdate="onTimeUpdate"
         controlslist="nodownload"

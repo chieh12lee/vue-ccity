@@ -4,8 +4,9 @@
       <img ref="bg" class="w-full" src="@/assets/imgs/bg-pattern.png" alt="" />
     </div>
     <div
+      id="welcome-btn"
       class="absolute right-[168px] top-[95px] w-[148px] h-[150px] z-40"
-      @click="$router.push({ name: 'welcome' })"
+      @click="triggerLock"
     >
       <img src="@/assets/imgs/logo-s.svg" alt="" />
     </div>
@@ -23,4 +24,5 @@
 import RotationMenu from '@/components/RotationMenu.vue'
 import { inject } from 'vue'
 const chapters = inject('chapters')
+const triggerLock = inject('triggerLock')
 </script>

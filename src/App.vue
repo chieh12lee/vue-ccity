@@ -34,8 +34,9 @@ const onTimeout = () => {
 const state = reactive({ isFreezing: false, isEffecting: true })
 provide('state', state)
 
-const { isActive } = useLock(1000 * 60 * 3, onTimeout, onTimeout)
+const { isActive, trigger: triggerLock } = useLock(1000 * 60 * 3, onTimeout, onTimeout)
 provide('isActive', isActive)
+provide('triggerLock', triggerLock)
 
 function clickEffect(e) {
   if (!state.isEffecting) return

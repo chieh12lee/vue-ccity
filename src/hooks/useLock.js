@@ -15,16 +15,20 @@ export default (count = 3 * 60 * 1000, onTimeout = () => {}) => {
   const { start, stop } = useTimeoutFn(timeoutCallback, count, { immediate: false })
 
   // 重置計時器
-  const resetTimer = () => {
+  const resetTimer = (e) => {
+    if (e.target.closest('#welcome-btn')) {
+      return // 不做任何事
+    }
     setTimeout(() => {
       isActive.value = true
       stop()
       start()
-    }, 1000)
+    }, 500)
   }
 
   // 手動啟動計時器
   const startTimer = () => {
+    isReset = true
     if (!isActive.value) {
       start()
       isActive.value = true
@@ -35,6 +39,9 @@ export default (count = 3 * 60 * 1000, onTimeout = () => {}) => {
   const stopTimer = () => {
     stop()
     isActive.value = false
+  }
+  const trigger = () => {
+    stopTimer()
   }
 
   // 監聽觸控事件
@@ -50,5 +57,5 @@ export default (count = 3 * 60 * 1000, onTimeout = () => {}) => {
     stopTimer()
   })
 
-  return { startTimer, stopTimer, resetTimer, isActive }
+  return { startTimer, stopTimer, resetTimer, isActive, trigger }
 }
