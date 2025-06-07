@@ -1,36 +1,12 @@
 import { ref, reactive, onMounted, computed } from 'vue'
-export default (pauses) => {
-  if (!pauses) {
+export default (_pauses) => {
+  if (!_pauses) {
     console.log('沒有資料')
   }
+
+  let pauses
   // 參考影片播放器
   const videoPlayer = ref(null)
-
-  // 定義章節與暫停點資料
-  // const chapters = reactive([
-  //   {
-  //     id: 1,
-  //     start: 0,
-  //     end: 60,
-  //     pauses: [
-  //       { time: 8, type: 'doubleClick', message: '請雙擊畫面繼續' },
-  //       { time: 14, type: 'swipe', message: '請向左滑動繼續' },
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     start: 60,
-  //     end: 120,
-  //     pauses: [{ time: 90, type: 'doubleClick', message: '請雙擊畫面繼續' }],
-  //   },
-
-  //   {
-  //     id: 3,
-  //     start: 90,
-  //     end: 150,
-  //     pauses: [{ time: 115, type: 'doubleClick', message: '請雙擊畫面繼續' }],
-  //   },
-  // ])
 
   // 當前章節、暫停點與互動元件顯示狀態
   // const currentChapter = ref(null)
@@ -52,13 +28,13 @@ export default (pauses) => {
     currentTime.value = videoPlayer.value.currentTime
     if (videoPlayer.value && pauses) {
       const pausePoint = pauses.find((p) => {
-        // 加入小範圍判斷避免漏掉暫停點
-        return Math.abs(videoPlayer.value.currentTime - p.time) < 0.1
+        return videoPlayer.value.currentTime - p.time >= -0.1 && !p.active
       })
 
       if (pausePoint && !currentPause.value) {
+        pausePoint.active = true
         pause()
-        currentPause.value = pausePoint
+        currentPause.value = { ...pausePoint }
         showActionComponent.value = true
       }
     }
@@ -66,25 +42,44 @@ export default (pauses) => {
 
   // 當互動動作完成後，關閉互動元件並繼續播放
   function onActionCompleted() {
+    console.log('done')
     showActionComponent.value = false
     currentPause.value = null
     if (videoPlayer.value) {
       play()
     }
   }
+  const onEnd = () => {
+    console.log('end')
+  }
+  const reset = () => {
+    showActionComponent.value = false
+    currentPause.value = false
+    pauses = _pauses.map((x) => {
+      return {
+        ...x,
+        active: false,
+      }
+    })
+  }
 
   const play = () => {
-    if (currentPause.value) return
+    if (!videoPlayer.value) return
     videoPlayer.value.play()
   }
 
   const replay = () => {
+    reset()
     videoPlayer.value.currentTime = 0
     videoPlayer.value.play()
   }
   const pause = () => {
     videoPlayer.value.pause()
   }
+
+  onMounted(() => {
+    replay()
+  })
 
   return {
     videoPlayer,
@@ -97,5 +92,6 @@ export default (pauses) => {
     play,
     pause,
     replay,
+    onEnd,
   }
 }

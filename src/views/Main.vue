@@ -21,6 +21,7 @@
         autoplay
         disablePictureInPicture
         @timeupdate="onTimeUpdate"
+        @ended="onEnd"
         controlslist="nodownload"
       >
         <source id="source" :src="chapter.video" type="video/mp4" />
@@ -69,6 +70,7 @@ const intro = useIntro(chapter.pauses)
 const {
   videoPlayer,
   onTimeUpdate,
+  onEnd,
   currentPause,
   showActionComponent,
   onActionCompleted,

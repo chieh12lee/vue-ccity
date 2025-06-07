@@ -14,6 +14,7 @@
   "dependencies": {
     "@nanoandrew4/vue3-carousel-3d": "^1.0.2",
     "@tailwindcss/vite": "^4.0.14",
+    "@vueuse/components": "^13.3.0",
     "@vueuse/core": "^13.0.0",
     "gsap": "^3.12.7",
     "hammerjs": "^2.0.8",
@@ -21,7 +22,8 @@
     "keen-slider": "^6.8.6",
     "swiper": "^11.2.5",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vue3-touch-events": "^5.0.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
