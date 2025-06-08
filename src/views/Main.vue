@@ -30,12 +30,12 @@
 
     <!-- 這個只管動態 -->
     <GestureAction
-      v-if="showActionComponent"
-      :type="currentPause?.type"
-      :message="currentPause?.message"
+      v-if="showActionComponent && currentPause"
+      :type="currentPause.type"
+      :icon="currentPause.icon"
       @completed="onActionCompleted"
     />
-    <Menu class="absolute bottom-0 left-0 w-full" @close="onClose" @open="onOpen"></Menu>
+    <Menu class="absolute bottom-0 left-0 w-full z-50" @close="onClose" @open="onOpen"></Menu>
     <Sketchit v-if="!menuActive" />
   </div>
 </template>

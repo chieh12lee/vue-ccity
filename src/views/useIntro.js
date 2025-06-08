@@ -64,7 +64,8 @@ export default (_pauses) => {
   }
 
   const play = () => {
-    if (!videoPlayer.value) return
+    if (!videoPlayer.value || showActionComponent.value) return
+
     videoPlayer.value.play()
   }
 

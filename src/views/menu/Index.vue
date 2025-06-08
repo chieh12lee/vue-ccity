@@ -5,7 +5,7 @@
   >
     <img class="absolute bottom-0 left-0 w-full" src="@/assets/imgs/menu-bg.svg" alt="" />
     <div
-      class="cursor-pointer absolute left-[50%] ml-[-19px] top-[70px] flex flex-col items-center z-10"
+      class="cursor-pointer absolute left-[50%] ml-[-19px] top-[70px] flex flex-col items-center z-50"
       @click="toggle"
       :class="!active ? '-mt-[140px]' : 'mt-[0px]'"
     >
@@ -37,10 +37,7 @@ const toggle = () => {
 
 // const intro = inject('info')
 const onUpdate = (id) => {
-  console.log(id)
   toggle()
   router.push({ name: 'main', params: { id } })
-
-  // info.jump(idx)
 }
 </script>

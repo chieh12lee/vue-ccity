@@ -1,5 +1,11 @@
 <template>
-  <carousel-3d :perspective="0" :space="350" :display="9" :onMainSlideClick="update">
+  <carousel-3d
+    :perspective="0"
+    :space="350"
+    :display="9"
+    :onMainSlideClick="update"
+    :start-index="Number($route.params.id) - 1"
+  >
     <slide v-for="(slide, i) in chapters" :index="i">
       <div>
         <img :src="slide.thumbnail" alt="" />

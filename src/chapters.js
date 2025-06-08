@@ -1,3 +1,15 @@
+const swipeIcon = new URL('@/assets/標示-滑動.webm', import.meta.url).href
+const icons = {
+  click: new URL('@/assets/標示-點擊.webm', import.meta.url).href,
+  swipe: swipeIcon,
+  swipeup: swipeIcon,
+  swipedown: swipeIcon,
+  swiperight: swipeIcon,
+  swipeleft: swipeIcon,
+}
+const dragPos = { x: 1620, y: 300 }
+const centerPos = { x: 910, y: 490 }
+
 export default [
   {
     id: 1,
@@ -6,21 +18,12 @@ export default [
     video: new URL('@/assets/video/01-基礎工程.mp4', import.meta.url).href,
     pauses: [
       {
-        time: 1,
-        type: 'drag',
-      },
-
-      {
-        time: 2,
-        type: 'swipeup',
-      },
-      {
         time: 3,
-        type: 'swiperight',
-      },
-      {
-        time: 10,
         type: 'click',
+        icon: {
+          url: icons.click,
+          pos: { x: 1490, y: 655 },
+        },
       },
     ],
   },
@@ -33,6 +36,10 @@ export default [
       {
         time: 8,
         type: 'click',
+        icon: {
+          url: icons.click,
+          pos: { x: 894, y: 528 },
+        },
       },
     ],
   },
@@ -45,7 +52,10 @@ export default [
       {
         time: 3,
         type: 'drag',
-        icon: 'icons/drag.svg',
+        icon: {
+          url: new URL('./assets/icon-柱內灌漿.webm', import.meta.url).href,
+          pos: dragPos,
+        },
       },
     ],
   },
@@ -58,6 +68,10 @@ export default [
       {
         time: 5,
         type: 'click',
+        icon: {
+          url: icons.click,
+          pos: { x: 907, y: 300 },
+        },
       },
     ],
   },
@@ -69,11 +83,21 @@ export default [
     pauses: [
       {
         time: 3,
-        type: 'swiperup',
+        type: 'swiperight',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 910, y: 490 },
+          deg: 0,
+        },
       },
       {
         time: 10,
-        type: 'swiperdown',
+        type: 'swipeleft',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 910, y: 490 },
+          deg: 180,
+        },
       },
     ],
   },
@@ -85,11 +109,21 @@ export default [
     pauses: [
       {
         time: 2,
-        type: 'swiperup',
+        type: 'swipe',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 880, y: 510 },
+          deg: -130,
+        },
       },
       {
         time: 9,
-        type: 'swiperdown',
+        type: 'swipe',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 880, y: 510 },
+          deg: 54,
+        },
       },
     ],
   },
@@ -102,11 +136,22 @@ export default [
     pauses: [
       {
         time: 6,
-        type: 'swiperup',
+        type: 'swipeup',
+
+        icon: {
+          url: icons.swipe,
+          pos: { x: 840, y: 750 },
+          deg: -90,
+        },
       },
       {
         time: 13,
-        type: 'swiperdown',
+        type: 'swipedown',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 840, y: 720 },
+          deg: 90,
+        },
       },
     ],
   },
@@ -118,11 +163,21 @@ export default [
     pauses: [
       {
         time: 3,
-        type: 'swiperdown',
+        type: 'swipeleft',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 1340, y: 354 },
+          deg: -180,
+        },
       },
       {
         time: 8,
-        type: 'swiperup',
+        type: 'swiperight',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 1340, y: 354 },
+          deg: 0,
+        },
       },
     ],
   },
@@ -135,12 +190,18 @@ export default [
       {
         time: 1,
         type: 'drag',
-        icon: 'icons/drag.svg',
+        icon: {
+          url: new URL('./assets/icon-吸氣閥.webm', import.meta.url).href,
+          pos: dragPos,
+        },
       },
       {
         time: 10,
         type: 'drag',
-        icon: 'icons/drag.svg',
+        icon: {
+          url: new URL('./assets/icon-吸氣閥.webm', import.meta.url).href,
+          pos: dragPos,
+        },
       },
     ],
   },
@@ -153,23 +214,43 @@ export default [
       {
         time: 0,
         type: 'drag',
-        icon: 'icons/drag.svg',
+        icon: {
+          url: new URL('./assets/icon-下雨.webm', import.meta.url).href,
+          pos: dragPos,
+        },
       },
       {
         time: 17,
         type: 'click',
+        icon: {
+          url: icons.click,
+          pos: { x: 910, y: 700 },
+        },
       },
       {
         time: 25,
         type: 'click',
+
+        icon: {
+          url: icons.click,
+          pos: { x: 910, y: 610 },
+        },
       },
       {
         time: 42,
         type: 'click',
+        icon: {
+          url: icons.click,
+          pos: { x: 910, y: 610 },
+        },
       },
       {
         time: 52,
         type: 'click',
+        icon: {
+          url: icons.click,
+          pos: { x: 910, y: 550 },
+        },
       },
     ],
   },

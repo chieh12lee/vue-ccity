@@ -1,15 +1,25 @@
 <template>
-  <div class="gesture-overlay" ref="overlay">
+  <div class="gesture-overlay" ref="overlay" :class="`type-${type}`">
     <Draggable
       v-if="type === 'drag'"
       v-slot="{ x, y }"
-      class="fixed select-none cursor-move z-31"
-      :initial-value="{ x: 1600, y: 400 }"
+      class="absolute select-none cursor-move z-31 w-[100px] h-[100px]"
+      :initial-value="{ ...icon.pos }"
       prevent-default
       :onEnd="onEnd"
     >
-      asdf
+      <video loop playinline autoplay :src="icon.url" />
     </Draggable>
+    <video
+      v-else
+      loop
+      playinline
+      autoplay
+      :src="icon.url"
+      :style="`left:${icon.pos.x}px;top:${icon.pos.y}px;transform: rotate(${icon.deg}deg);`"
+      class="absolute select-none origin-center"
+    ></video>
+
     <!-- <p>{{ message }}</p> -->
   </div>
 </template>
@@ -22,6 +32,10 @@ const props = defineProps({
   type: {
     type: String,
     default: 'click', // 可選 'click' | 'doubleClick' | 'swipe'
+  },
+  icon: {
+    type: Object,
+    default: () => {}, // 可選 'click' | 'doubleClick' | 'swipe'
   },
   message: {
     type: String,
@@ -87,6 +101,21 @@ onBeforeUnmount(() => {
   align-items: center;
   color: #fff;
   font-size: 24px;
-  z-index: 45;
+  z-index: 1;
+}
+
+video {
+  width: 120px;
+  height: 120px;
+}
+.type-swipe,
+.type-swiperight,
+.type-swipeleft,
+.type-swipeup,
+.type-swipedown {
+  video {
+    width: 240px;
+    height: 240px;
+  }
 }
 </style>
