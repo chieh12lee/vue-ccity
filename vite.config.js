@@ -9,6 +9,9 @@ export default defineConfig(({ command, mode }) => {
   // const isDev = mode === 'development'
 
   return {
+    build: {
+      outDir: mode === 'production' ? 'charmingcityscape-touch' : 'dist',
+    },
     base:
       mode === 'staging'
         ? '/vue-ccity/' // 例如 /staging/
