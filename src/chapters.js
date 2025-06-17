@@ -18,7 +18,7 @@ export default [
     video: new URL('@/assets/video/01-基礎工程.mp4', import.meta.url).href,
     pauses: [
       {
-        time: 3,
+        time: 7,
         type: 'click',
         icon: {
           url: icons.click,
@@ -34,7 +34,7 @@ export default [
     video: new URL('@/assets/video/02-SC鋼骨構造.mp4', import.meta.url).href,
     pauses: [
       {
-        time: 8,
+        time: 9,
         type: 'click',
         icon: {
           url: icons.click,
@@ -66,11 +66,11 @@ export default [
     video: new URL('@/assets/video/04-SA鋼筋續接器.mp4', import.meta.url).href,
     pauses: [
       {
-        time: 5,
+        time: 6,
         type: 'click',
         icon: {
           url: icons.click,
-          pos: { x: 907, y: 300 },
+          pos: { x: 899, y: 530 },
         },
       },
     ],
@@ -99,6 +99,19 @@ export default [
           deg: 180,
         },
       },
+
+      {
+        time: 15,
+        type: 'swiperight',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 910, y: 490 },
+          deg: 0,
+        },
+        onCompleted: (video) => {
+          video.jump(0)
+        },
+      },
     ],
   },
   {
@@ -125,6 +138,18 @@ export default [
           deg: 54,
         },
       },
+      {
+        time: 13,
+        type: 'swipe',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 880, y: 510 },
+          deg: -130,
+        },
+        onCompleted: (video) => {
+          video.jump(0)
+        },
+      },
     ],
   },
 
@@ -145,12 +170,24 @@ export default [
         },
       },
       {
-        time: 13,
+        time: 14,
         type: 'swipedown',
         icon: {
           url: icons.swipe,
           pos: { x: 840, y: 720 },
           deg: 90,
+        },
+      },
+      {
+        time: 19,
+        type: 'swipeup',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 840, y: 750 },
+          deg: -90,
+        },
+        onCompleted: (video) => {
+          video.jump(0)
         },
       },
     ],
@@ -160,23 +197,56 @@ export default [
     title: 'YKK氣密窗',
     thumbnail: new URL('@/assets/item/8.png', import.meta.url).href,
     video: new URL('@/assets/video/08-YKK氣密窗.mp4', import.meta.url).href,
+    audio: new URL('@/assets/video/08-YKK氣密窗.mp3', import.meta.url).href,
+    muted: true,
+    onDblclick: (video, audio) => {
+      audio.pause()
+      video.seek(16)
+    },
     pauses: [
       {
-        time: 3,
+        time: 5.5,
         type: 'swipeleft',
         icon: {
           url: icons.swipe,
           pos: { x: 1340, y: 354 },
           deg: -180,
         },
+        onCompleted: (video, audio) => {
+          video.play()
+          setTimeout(() => {
+            audio.pause()
+          }, 1500)
+        },
       },
       {
-        time: 8,
+        time: 9,
         type: 'swiperight',
         icon: {
           url: icons.swipe,
           pos: { x: 1340, y: 354 },
           deg: 0,
+        },
+        onCompleted: (video, audio) => {
+          video.play()
+          setTimeout(() => {
+            audio.play()
+          }, 500)
+        },
+      },
+      {
+        time: 12,
+        type: 'swipeleft',
+        icon: {
+          url: icons.swipe,
+          pos: { x: 1340, y: 354 },
+          deg: -180,
+        },
+        onCompleted: (video, audio) => {
+          video.jump(0)
+          setTimeout(() => {
+            audio.pause()
+          }, 2500)
         },
       },
     ],
@@ -196,11 +266,11 @@ export default [
         },
       },
       {
-        time: 10,
-        type: 'drag',
+        time: 11,
+        type: 'click',
         icon: {
-          url: new URL('./assets/icon-吸氣閥.webm', import.meta.url).href,
-          pos: dragPos,
+          url: icons.click,
+          pos: { x: 600, y: 700 },
         },
       },
     ],
@@ -220,7 +290,7 @@ export default [
         },
       },
       {
-        time: 17,
+        time: 18,
         type: 'click',
         icon: {
           url: icons.click,
@@ -228,7 +298,7 @@ export default [
         },
       },
       {
-        time: 25,
+        time: 26,
         type: 'click',
 
         icon: {
@@ -237,7 +307,7 @@ export default [
         },
       },
       {
-        time: 42,
+        time: 46,
         type: 'click',
         icon: {
           url: icons.click,
@@ -245,7 +315,7 @@ export default [
         },
       },
       {
-        time: 52,
+        time: 53,
         type: 'click',
         icon: {
           url: icons.click,

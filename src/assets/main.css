@@ -1,2 +1,6 @@
-
+html, body {
+  overflow: hidden;
+  touch-action: none; /* 關閉所有觸控行為 */
+  overscroll-behavior: none; /* 防止滑動觸發外層滾動 */
+}
 

@@ -7,6 +7,7 @@ export default (_pauses) => {
   let pauses
   // 參考影片播放器
   const videoPlayer = ref(null)
+  const audioPlayer = ref(null)
 
   // 當前章節、暫停點與互動元件顯示狀態
   // const currentChapter = ref(null)
@@ -26,6 +27,7 @@ export default (_pauses) => {
   function onTimeUpdate() {
     if (!videoPlayer.value) return
     currentTime.value = videoPlayer.value.currentTime
+    console.log(currentTime.value)
     if (videoPlayer.value && pauses) {
       const pausePoint = pauses.find((p) => {
         return videoPlayer.value.currentTime - p.time >= -0.1 && !p.active
@@ -40,27 +42,33 @@ export default (_pauses) => {
     }
   }
 
-  // 當互動動作完成後，關閉互動元件並繼續播放
-  function onActionCompleted() {
-    console.log('done')
-    showActionComponent.value = false
-    currentPause.value = null
-    if (videoPlayer.value) {
-      play()
-    }
-  }
   const onEnd = () => {
     console.log('end')
   }
-  const reset = () => {
-    showActionComponent.value = false
-    currentPause.value = false
+  const resetPauses = () => {
     pauses = _pauses.map((x) => {
       return {
         ...x,
         active: false,
       }
     })
+  }
+
+  const reset = () => {
+    showActionComponent.value = false
+    currentPause.value = false
+    resetPauses()
+  }
+
+  const jump = (idx) => {
+    if (!videoPlayer.value) return
+    videoPlayer.value.currentTime = pauses[idx].time
+    pauses.forEach((x, i) => {
+      if (i >= idx + 1) {
+        x.active = false
+      }
+    })
+    play()
   }
 
   const play = () => {
@@ -73,9 +81,57 @@ export default (_pauses) => {
     reset()
     videoPlayer.value.currentTime = 0
     videoPlayer.value.play()
+    audio.replay()
   }
   const pause = () => {
     videoPlayer.value.pause()
+  }
+  const seek = (time) => {
+    reset()
+    pauses.forEach((x) => {
+      if (x.time <= time) {
+        x.active = true
+      }
+    })
+
+    videoPlayer.value.currentTime = time
+    play()
+  }
+
+  const video = {
+    dom: videoPlayer,
+    play,
+    jump,
+    replay,
+    pause,
+    seek,
+  }
+  const audio = {
+    dom: audioPlayer,
+    replay: () => {
+      if (!audioPlayer.value) return
+      audioPlayer.value.currentTime = 0
+      audioPlayer.value.play()
+    },
+    play: () => {
+      if (!audioPlayer.value) return
+      audioPlayer.value.play()
+    },
+    pause: () => {
+      if (!audioPlayer.value) return
+      audioPlayer.value.pause()
+    },
+  }
+
+  // 當互動動作完成後，關閉互動元件並繼續播放
+  function onActionCompleted() {
+    showActionComponent.value = false
+    if (currentPause.value?.onCompleted) {
+      currentPause.value.onCompleted(video, audio, pauses)
+    } else {
+      play()
+    }
+    currentPause.value = null
   }
 
   onMounted(() => {
@@ -84,6 +140,7 @@ export default (_pauses) => {
 
   return {
     videoPlayer,
+    audioPlayer,
     onTimeUpdate,
     onActionCompleted,
     // chapters,
@@ -94,5 +151,7 @@ export default (_pauses) => {
     pause,
     replay,
     onEnd,
+    video,
+    audio,
   }
 }

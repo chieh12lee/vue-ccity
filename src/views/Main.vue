@@ -22,15 +22,17 @@
         disablePictureInPicture
         @timeupdate="onTimeUpdate"
         @ended="onEnd"
+        :muted="chapter.muted"
         controlslist="nodownload"
       >
         <source id="source" :src="chapter.video" type="video/mp4" />
       </video>
+      <audio ref="audioPlayer" loop autoplay v-if="chapter.audio" :src="chapter.audio"></audio>
     </div>
 
     <!-- 這個只管動態 -->
     <GestureAction
-      v-if="showActionComponent && currentPause"
+      v-if="showActionComponent && currentPause && !sketchitActive"
       :type="currentPause.type"
       :icon="currentPause.icon"
       @completed="onActionCompleted"
@@ -41,7 +43,7 @@
 </template>
 
 <script setup>
-import { onMounted, nextTick } from 'vue'
+import { onMounted, onBeforeUnmount, nextTick, ref } from 'vue'
 import Menu from './menu/Index.vue'
 import useMenu from './menu/useMenu'
 import useIntro from './useIntro'
@@ -51,7 +53,7 @@ import Sketchit from '@/components/sketchit/Index.vue'
 import { provide, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import GestureAction from './_Action.vue'
-
+import Hammer from 'hammerjs'
 const route = useRoute()
 const state = inject('state')
 
@@ -68,6 +70,7 @@ const { active: sketchitActive } = sketchit
 
 const intro = useIntro(chapter.pauses)
 const {
+  audioPlayer,
   videoPlayer,
   onTimeUpdate,
   onEnd,
@@ -77,6 +80,9 @@ const {
   play,
   pause,
   replay,
+  video,
+  audio,
+  seek,
 } = intro
 
 provide('intro', intro)
@@ -87,4 +93,20 @@ const onClose = () => {
 const onOpen = () => {
   pause()
 }
+const overlay = ref(null)
+
+let dblclickHandler = null
+onMounted(() => {
+  if (chapter.onDblclick) {
+    dblclickHandler = (e) => chapter.onDblclick(video, audio)
+    document.addEventListener('dblclick', dblclickHandler)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (dblclickHandler) {
+    document.removeEventListener('dblclick', dblclickHandler)
+    dblclickHandler = null
+  }
+})
 </script>

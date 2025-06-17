@@ -62,13 +62,13 @@ onMounted(() => {
     } else if (props.type === 'doubleClick') {
       overlay.value.addEventListener('dblclick', handleAction)
     } else if (props.type.includes('swipe')) {
-      const hammer = new Hammer(overlay.value)
-      hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL })
-      hammer.on(props.type, handleAction)
+      hammerInstance = new Hammer(overlay.value)
+      hammerInstance.get('swipe').set({ direction: Hammer.DIRECTION_ALL })
+      hammerInstance.on(props.type, handleAction)
     } else if (props.type === 'drag') {
     }
 
-    console.log(props.type)
+    // console.log(props.type)
   }
 })
 
