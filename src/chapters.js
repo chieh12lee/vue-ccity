@@ -280,6 +280,7 @@ export default [
     title: '雨水回收系統',
     thumbnail: new URL('@/assets/item/10.png', import.meta.url).href,
     video: new URL('@/assets/video/10-雨水回收系統.mp4', import.meta.url).href,
+    audio: new URL('@/assets/video/10-雨水回收系統.mp3', import.meta.url).href,
     pauses: [
       {
         time: 0,
