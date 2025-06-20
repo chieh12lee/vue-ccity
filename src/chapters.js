@@ -215,7 +215,8 @@ export default [
         onCompleted: (video, audio) => {
           video.play()
           setTimeout(() => {
-            audio.pause()
+            audio.dom.value.volume = 0.15 // 最大 1.0
+            // audio.pause()
           }, 1500)
         },
       },
@@ -230,7 +231,8 @@ export default [
         onCompleted: (video, audio) => {
           video.play()
           setTimeout(() => {
-            audio.play()
+            audio.dom.value.volume = 1 // 最大 1.0
+            // audio.play()
           }, 500)
         },
       },
@@ -245,7 +247,7 @@ export default [
         onCompleted: (video, audio) => {
           video.jump(0)
           setTimeout(() => {
-            audio.pause()
+            audio.dom.value.volume = 0.15 // 最大 1.0
           }, 2500)
         },
       },
@@ -267,10 +269,11 @@ export default [
       },
       {
         time: 11,
-        type: 'click',
+        type: 'swipedown',
         icon: {
-          url: icons.click,
+          url: icons.swipe,
           pos: { x: 600, y: 700 },
+          deg: 90,
         },
       },
     ],
@@ -281,6 +284,9 @@ export default [
     thumbnail: new URL('@/assets/item/10.png', import.meta.url).href,
     video: new URL('@/assets/video/10-雨水回收系統.mp4', import.meta.url).href,
     audio: new URL('@/assets/video/10-雨水回收系統.mp3', import.meta.url).href,
+    onStart: (video, audio) => {
+      audio.pause()
+    },
     pauses: [
       {
         time: 0,
@@ -288,6 +294,10 @@ export default [
         icon: {
           url: new URL('./assets/icon-下雨.webm', import.meta.url).href,
           pos: dragPos,
+        },
+        onCompleted: (video, audio) => {
+          audio.play()
+          video.play()
         },
       },
       {

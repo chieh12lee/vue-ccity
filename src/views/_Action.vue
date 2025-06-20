@@ -43,7 +43,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['completed'])
+const emit = defineEmits(['completed', 'start'])
 const overlay = ref(null)
 let dragger
 

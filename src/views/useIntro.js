@@ -27,7 +27,6 @@ export default (_pauses) => {
   function onTimeUpdate() {
     if (!videoPlayer.value) return
     currentTime.value = videoPlayer.value.currentTime
-    console.log(currentTime.value)
     if (videoPlayer.value && pauses) {
       const pausePoint = pauses.find((p) => {
         return videoPlayer.value.currentTime - p.time >= -0.1 && !p.active
@@ -124,7 +123,7 @@ export default (_pauses) => {
   }
 
   // 當互動動作完成後，關閉互動元件並繼續播放
-  function onActionCompleted() {
+  const onActionCompleted = () => {
     showActionComponent.value = false
     if (currentPause.value?.onCompleted) {
       currentPause.value.onCompleted(video, audio, pauses)

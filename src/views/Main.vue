@@ -37,6 +37,14 @@
       :icon="currentPause.icon"
       @completed="onActionCompleted"
     />
+    <video
+      v-if="isDbl"
+      loop
+      playinline
+      autoplay
+      src="@/assets/標示-點擊.webm"
+      class="w-[120px] absolute right-[186px] top-[30%] select-none origin-center"
+    ></video>
     <Menu class="absolute bottom-0 left-0 w-full z-50" @close="onClose" @open="onOpen"></Menu>
     <Sketchit v-if="!menuActive" />
   </div>
@@ -96,9 +104,17 @@ const onOpen = () => {
 const overlay = ref(null)
 
 let dblclickHandler = null
+const isDbl = ref(false)
 onMounted(() => {
+  if (chapter.onStart) {
+    chapter.onStart(video, audio)
+  }
   if (chapter.onDblclick) {
-    dblclickHandler = (e) => chapter.onDblclick(video, audio)
+    isDbl.value = true
+    dblclickHandler = (e) => {
+      chapter.onDblclick(video, audio)
+      isDbl.value = false
+    }
     document.addEventListener('dblclick', dblclickHandler)
   }
 })

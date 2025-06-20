@@ -29,7 +29,9 @@ provide('chapters', chapters)
 const router = useRouter()
 
 const onTimeout = () => {
-  router.push({ name: 'welcome' })
+  if (import.meta.env.MODE != 'development') {
+    router.push({ name: 'welcome' })
+  }
 }
 const state = reactive({ isFreezing: false, isEffecting: true })
 provide('state', state)
