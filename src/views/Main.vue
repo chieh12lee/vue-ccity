@@ -27,7 +27,14 @@
       >
         <source id="source" :src="chapter.video" type="video/mp4" />
       </video>
-      <audio ref="audioPlayer" loop autoplay v-if="chapter.audio" :src="chapter.audio"></audio>
+      <audio
+        ref="audioPlayer"
+        loop
+        autoplay
+        v-if="chapter.audio"
+        :key="chapter.audio"
+        :src="chapter.audio"
+      ></audio>
     </div>
 
     <!-- 這個只管動態 -->
@@ -120,9 +127,15 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  console.log('onUnmounted')
   if (dblclickHandler) {
     document.removeEventListener('dblclick', dblclickHandler)
     dblclickHandler = null
+  }
+  if (audioPlayer.value) {
+    audioPlayer.value.pause()
+    audioPlayer.value.currentTime = 0
+    audioPlayer.value = null
   }
 })
 </script>
