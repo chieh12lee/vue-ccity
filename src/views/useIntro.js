@@ -80,7 +80,7 @@ export default (_pauses) => {
     reset()
     videoPlayer.value.currentTime = 0
     videoPlayer.value.play()
-    audio.replay()
+    audio.reset()
   }
   const pause = () => {
     videoPlayer.value.pause()
@@ -93,6 +93,7 @@ export default (_pauses) => {
       }
     })
 
+    if (!videoPlayer.value) return
     videoPlayer.value.currentTime = time
     play()
   }
@@ -107,9 +108,16 @@ export default (_pauses) => {
   }
   const audio = {
     dom: audioPlayer,
+
+    reset: () => {
+      if (!audioPlayer.value) return
+      audioPlayer.value.currentTime = 0
+      audioPlayer.value.volume = 1
+    },
     replay: () => {
       if (!audioPlayer.value) return
       audioPlayer.value.currentTime = 0
+      audioPlayer.value.volume = 1
       audioPlayer.value.play()
     },
     play: () => {

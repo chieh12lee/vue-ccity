@@ -9,7 +9,7 @@
       </div>
       <div
         class="mt-[43px] py-[5px] px-3 border-y-2 border-[#c79f62] text-white text-[1.24rem] font-bold text-center"
-        @click="replay"
+        @click="reload"
       >
         {{ chapter.title }}
       </div>
@@ -29,11 +29,10 @@
       </video>
       <audio
         ref="audioPlayer"
-        loop
-        autoplay
+        v-bind="Object.assign({ loop: true }, chapter.audio.Config)"
         v-if="chapter.audio"
-        :key="chapter.audio"
-        :src="chapter.audio"
+        :key="chapter.audio.src"
+        :src="chapter.audio.src"
       ></audio>
     </div>
 
@@ -109,10 +108,7 @@ const onOpen = () => {
   pause()
 }
 const overlay = ref(null)
-
-let dblclickHandler = null
-const isDbl = ref(false)
-onMounted(() => {
+const reload = () => {
   if (chapter.onStart) {
     chapter.onStart(video, audio)
   }
@@ -124,18 +120,25 @@ onMounted(() => {
     }
     document.addEventListener('dblclick', dblclickHandler)
   }
+  replay()
+}
+
+let dblclickHandler = null
+const isDbl = ref(false)
+
+onMounted(() => {
+  reload()
 })
 
 onBeforeUnmount(() => {
-  console.log('onUnmounted')
   if (dblclickHandler) {
     document.removeEventListener('dblclick', dblclickHandler)
     dblclickHandler = null
   }
-  if (audioPlayer.value) {
-    audioPlayer.value.pause()
-    audioPlayer.value.currentTime = 0
-    audioPlayer.value = null
-  }
+  // if (audioPlayer.value) {
+  //   audioPlayer.value.pause()
+  //   audioPlayer.value.currentTime = 0
+  //   audioPlayer.value = null
+  // }
 })
 </script>
