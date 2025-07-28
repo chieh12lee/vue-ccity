@@ -29,7 +29,7 @@
       </video>
       <audio
         ref="audioPlayer"
-        v-bind="Object.assign({ loop: true }, chapter.audio.Config)"
+        v-bind="chapter.audio.config"
         v-if="chapter.audio"
         :key="chapter.audio.src"
         :src="chapter.audio.src"

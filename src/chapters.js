@@ -199,7 +199,9 @@ export default [
     video: new URL('@/assets/video/08-YKK氣密窗.mp4', import.meta.url).href,
     audio: {
       src: new URL('@/assets/video/08-YKK氣密窗.mp3', import.meta.url).href,
-      config: {},
+      config: {
+        loop: true,
+      },
     },
     muted: true,
     onDblclick: (video, audio) => {
@@ -289,11 +291,10 @@ export default [
     title: '雨水回收系統',
     thumbnail: new URL('@/assets/item/10.png', import.meta.url).href,
     video: new URL('@/assets/video/10-雨水回收系統.mp4', import.meta.url).href,
+
+    muted: true,
     audio: {
       src: new URL('@/assets/video/10-雨水回收系統.mp3', import.meta.url).href,
-      config: {
-        loop: false,
-      },
     },
     onStart: (video, audio) => {
       audio.pause()
