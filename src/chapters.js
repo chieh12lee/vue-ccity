@@ -223,7 +223,7 @@ export default [
         onCompleted: (video, audio) => {
           video.play()
           setTimeout(() => {
-            audio.dom.value.volume = 0.15 // 最大 1.0
+            audio.dom.value.volume = 0.3 // 最大 1.0
             // audio.pause()
           }, 1500)
         },
