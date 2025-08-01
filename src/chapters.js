@@ -205,10 +205,12 @@ export default [
     },
     muted: true,
     onDblclick: (video, audio) => {
+      audio.dom.value.volume = 1 // 最大 1.0
       audio.pause()
       video.seek(16)
     },
     onStart: (video, audio) => {
+      audio.dom.value.volume = 1 // 最大 1.0
       audio.play()
     },
     pauses: [
@@ -223,7 +225,7 @@ export default [
         onCompleted: (video, audio) => {
           video.play()
           setTimeout(() => {
-            audio.dom.value.volume = 0.3 // 最大 1.0
+            audio.dom.value.volume = 0.45 // 最大 1.0
             // audio.pause()
           }, 1500)
         },
@@ -255,7 +257,7 @@ export default [
         onCompleted: (video, audio) => {
           video.jump(0)
           setTimeout(() => {
-            audio.dom.value.volume = 0.15 // 最大 1.0
+            audio.dom.value.volume = 0.45 // 最大 1.0
           }, 2500)
         },
       },
