@@ -24,19 +24,26 @@ import useLock from '@/hooks/useLock'
 import Saver from '@/views/_Saver.vue'
 import chapters from './chapters.js'
 
+chapters.forEach((x) => {
+  x.pauses = x.pauses.map((y) => {
+    return { ...y, time: Number((y.time * 0.9).toFixed(2)) }
+  })
+})
+console.log(chapters)
+
 provide('chapters', chapters)
 
 const router = useRouter()
 
 const onTimeout = () => {
   if (import.meta.env.MODE != 'development') {
-    router.push({ name: 'welcome' })
+    // router.push({ name: 'welcome' })
   }
 }
 const state = reactive({ isFreezing: false, isEffecting: true })
 provide('state', state)
 
-const { isActive, trigger: triggerLock } = useLock(1000 * 60 * 3, onTimeout, onTimeout)
+const { isActive, trigger: triggerLock } = useLock(1000 * 60 * 60, onTimeout, onTimeout)
 provide('isActive', isActive)
 provide('triggerLock', triggerLock)
 
